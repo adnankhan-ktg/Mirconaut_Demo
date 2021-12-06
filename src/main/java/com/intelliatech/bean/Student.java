@@ -2,11 +2,7 @@ package com.intelliatech.bean;
 
 import io.micronaut.core.annotation.Introspected;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import javax.persistence.*;
 
 
 @Entity
@@ -16,6 +12,8 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int studentId;
     private String studentName;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Address address;
 
 
     public int getStudentId() {
@@ -34,13 +32,30 @@ public class Student {
         this.studentName = studentName;
     }
 
+    public Address getAddress() {
+        return address;
+    }
 
-    public Student(int studentId, String studentName) {
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Student(int studentId, String studentName, Address address) {
         this.studentId = studentId;
         this.studentName = studentName;
+        this.address = address;
+    }
+
+    public Student() {
     }
 
 
-    public Student() {
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId=" + studentId +
+                ", studentName='" + studentName + '\'' +
+                ", address=" + address +
+                '}';
     }
 }

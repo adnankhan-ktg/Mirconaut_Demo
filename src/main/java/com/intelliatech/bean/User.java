@@ -1,9 +1,7 @@
 package com.intelliatech.bean;
 
-import io.micronaut.core.annotation.Introspected;
 
 import javax.persistence.*;
-
 
 @Entity
 public class User {
@@ -52,6 +50,7 @@ public class User {
         this.address = address;
     }
 
+    //Constructors
     public User(int userId, String userName, int userAge, Address address) {
         this.userId = userId;
         this.userName = userName;

@@ -1,9 +1,14 @@
 package com.intelliatech.bean;
 
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -51,12 +56,12 @@ public class User {
     }
 
     //Constructors
-    public User(int userId, String userName, int userAge, Address address) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userAge = userAge;
-        this.address = address;
-    }
+//    public User(int userId, String userName, int userAge, Address address) {
+//        this.userId = userId;
+//        this.userName = userName;
+//        this.userAge = userAge;
+//        this.address = address;
+//    }
 
 
     public User(int userId, String userName, int userAge) {
@@ -65,8 +70,8 @@ public class User {
         this.userAge = userAge;
     }
 
-    public User() {
-    }
+//    public User() {
+//    }
 
     @Override
     public String toString() {

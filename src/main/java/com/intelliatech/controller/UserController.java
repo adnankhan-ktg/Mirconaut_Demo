@@ -5,11 +5,16 @@ import com.intelliatech.service.UserService;
 import com.intelliatech.serviceimpl.UserServiceImpl;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
+import io.micronaut.http.multipart.CompletedFileUpload;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.print.attribute.standard.Media;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller("/user")
@@ -64,6 +69,18 @@ public class UserController {
         User userOne = this.userService.updateUser(user);
         log.info("Leaving UserController in updateUser()");
         return HttpResponse.status(HttpStatus.OK).body(userOne);
+    }
+
+
+    @Post(value = "/uploadExcel",consumes = {MediaType.MULTIPART_FORM_DATA})
+    public HttpResponse<List> dumpExcel(@Part CompletedFileUpload file) throws IOException, SQLException,Exception
+    {
+        log.info("Inside UserController in dumpExcel()");
+
+         List<User> list = this.userService.dumpExcel(file);
+
+        log.info("Leaving UserController in dumpExcel()");
+        return HttpResponse.status(HttpStatus.OK).body(list);
     }
 
 

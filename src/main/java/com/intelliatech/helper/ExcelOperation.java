@@ -1,5 +1,9 @@
 package com.intelliatech.helper;
 
+import com.intelliatech.bean.User;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeMultipart;
+import io.micronaut.http.multipart.CompletedFileUpload;
+import jakarta.inject.Singleton;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -8,9 +12,12 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-@Component
+@Singleton
 public class ExcelOperation {
 
     private static int failed = 0;
@@ -35,19 +42,19 @@ public class ExcelOperation {
             Iterator<Row> rowIterator = sheet.iterator();
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
+
                 // For each row, iterate through all the columns
                 Iterator<Cell> cellIterator = row.cellIterator();
 
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
+
                     // Check the cell type and format accordingly
                     switch (cell.getCellType()) {
                         case NUMERIC:
-//                                System.out.print(cell.getNumericCellValue() + "\t");
                             status(cell.getNumericCellValue());
                             break;
                         case STRING:
-//                                System.out.print(cell.getStringCellValue() + "\t");
                             byLastName(name,cell.getStringCellValue());
                             break;
                     }
@@ -91,4 +98,75 @@ public class ExcelOperation {
         System.out.println("total  = "+ total );
         System.out.println(tempName + " = "+lastName);
     }
+
+
+    //check that file is of excel type or not
+    public boolean checkContentType(CompletedFileUpload file)
+    {
+        String contentType = file.getContentType().get().toString();
+
+        if(contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+        {
+            return true;
+        }
+        else{
+        return false;
+        }
+    }
+
+
+
+    public List<User> convertExcelToListOfProduct(InputStream is)
+    {
+        List<User> list = new ArrayList<>();
+
+        try{
+
+            XSSFWorkbook workbook = new XSSFWorkbook(is);
+            XSSFSheet sheet = workbook.getSheet("Sheet1");
+
+            int rowNumber = 0;
+            Iterator<Row> iterator = sheet.iterator();
+
+            while(iterator.hasNext())
+            {
+                Row row = iterator.next();
+                if(rowNumber == 0)
+                {
+                    rowNumber++;
+                    continue;
+                }
+
+                Iterator<Cell> cells = row.iterator();
+                int cid = 0;
+
+                User user = new User();
+                while(cells.hasNext())
+                {
+                    Cell cell = cells.next();
+
+                    switch (cid)
+                    {
+                        case 0:
+                              user.setUserName(cell.getStringCellValue());
+                              break;
+                        case 1:
+                              user.setUserAge((int) cell.getNumericCellValue());
+                            break;
+                        default:
+                            break;
+                    }
+                    cid++;
+                }
+                System.out.println(user);
+                list.add(user);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 }

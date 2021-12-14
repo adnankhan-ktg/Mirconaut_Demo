@@ -34,7 +34,7 @@ class UserControllerTest {
     @Test
     void createUser() {
 
-        User user = new User(1,"adnan",19);
+        User user = new User(1,"adnan","89648823258",20);
         Mockito.when(userService.addUser(user)).thenReturn(user);
 
 
@@ -47,11 +47,11 @@ class UserControllerTest {
     void getUsers() {
 
         List<User> listOfUser = new ArrayList<>();
-        listOfUser.add(new User(1,"dheeraj",19));
-        listOfUser.add(new User(2,"aditya",25));
-        listOfUser.add(new User(3,"ramesh",28));
-        listOfUser.add(new User(4,"praveen",30));
-        listOfUser.add(new User(5,"sumit",32));
+        listOfUser.add(new User(1,"dheeraj","89648823258",19));
+        listOfUser.add(new User(2,"aditya","89648823251",25));
+        listOfUser.add(new User(3,"ramesh","89648823252",28));
+        listOfUser.add(new User(4,"praveen","89648823253",30));
+        listOfUser.add(new User(5,"sumit","89648823254",32));
 
 
         Mockito.when(userService.getUsers()).thenReturn(listOfUser);
@@ -67,11 +67,11 @@ class UserControllerTest {
 
         Map<Integer,User> map = new HashMap<>();
 
-        map.put(1,new User(1,"dheeraj",19));
-        map.put(2,new User(2,"aditya",25));
-        map.put(3,new User(3,"ramesh",28));
-        map.put(4,new User(4,"praveen",30));
-        map.put(5,new User(5,"sumit",32));
+        map.put(1,new User(1,"dheeraj","89648823258",19));
+        map.put(2,new User(2,"aditya","89648823251",25));
+        map.put(3,new User(3,"ramesh","89648823252",28));
+        map.put(4,new User(4,"praveen","89648823253",30));
+        map.put(5,new User(5,"sumit","89648823254",32));
 
         int userId = 1;
 
@@ -97,7 +97,7 @@ class UserControllerTest {
     @Test
     void updateUser() {
 
-        User user = new User(1,"adnan",19);
+        User user = new User(1,"adnan","8964882358",19);
 
         Mockito.when(userService.updateUser(user)).thenReturn(user);
 

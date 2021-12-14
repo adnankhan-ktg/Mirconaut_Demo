@@ -7,28 +7,25 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
-
+    private int id;
+    @Column(name = "user_name")
     private String userName;
-
+    @Column(name = "mobile_number",unique = true)
+    private String mobileNumber;
+    @Column(name = "user_age")
     private int userAge;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Address address;
 
-
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -39,6 +36,14 @@ public class User {
         this.userName = userName;
     }
 
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
     public int getUserAge() {
         return userAge;
     }
@@ -47,39 +52,15 @@ public class User {
         this.userAge = userAge;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    //Constructors
-//    public User(int userId, String userName, int userAge, Address address) {
-//        this.userId = userId;
-//        this.userName = userName;
-//        this.userAge = userAge;
-//        this.address = address;
-//    }
-
-
-    public User(int userId, String userName, int userAge) {
-        this.userId = userId;
+    public User(int id, String userName, String mobileNumber, int userAge) {
+        this.id = id;
         this.userName = userName;
+        this.mobileNumber = mobileNumber;
         this.userAge = userAge;
     }
 
-//    public User() {
-//    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", userAge=" + userAge +
-                ", address=" + address +
-                '}';
+    public User() {
     }
+
+
 }

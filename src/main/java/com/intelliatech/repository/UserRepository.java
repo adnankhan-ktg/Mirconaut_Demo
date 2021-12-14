@@ -8,5 +8,5 @@ import io.micronaut.data.jpa.repository.JpaRepository;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
 
-    User findByUserId(int id);
+    User findById(int id);
 }

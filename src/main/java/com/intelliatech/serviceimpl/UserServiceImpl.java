@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(int userId) {
         log.info("Inside UserServiceImpl in getUser");
-        User user = this.userRepository.findByUserId(userId);
+        User user = this.userRepository.findById(userId);
         log.info("Leaving UserServiceImpl in getUser");
         return user;
 

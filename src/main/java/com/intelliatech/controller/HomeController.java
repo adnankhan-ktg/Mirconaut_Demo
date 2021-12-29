@@ -14,9 +14,11 @@ import java.util.Locale;
 public class HomeController {
 
 
+
     @Get("/get/previous/six/months")
     public List<String> getPreviouSixMonths()
     {
+
         List<String> listOfPreviosSixMonths = new ArrayList<>();
         for (int i = 5; i >= 0; i--) {
             YearMonth date = YearMonth.now().minusMonths(i);
@@ -26,4 +28,6 @@ public class HomeController {
         }
         return listOfPreviosSixMonths;
     }
+
+
  }

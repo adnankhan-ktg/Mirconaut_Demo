@@ -2,6 +2,7 @@ package com.intelliatech.serviceimpl;
 
 import com.intelliatech.bean.User;
 import com.intelliatech.helper.ExcelOperation;
+import com.intelliatech.queryExtractor.UserExtractor;
 import com.intelliatech.repository.UserRepository;
 import com.intelliatech.service.UserService;
 import io.micronaut.http.multipart.CompletedFileUpload;
@@ -83,5 +84,21 @@ public class UserServiceImpl implements UserService {
             log.info("Leaving UserServiceImpl in dumpExcel()");
             return list;
         }
+    }
+
+
+    @Override
+    public void getExtractor() {
+        UserExtractor e = this.userRepository.getUserExtractor();
+        System.out.println(e);
+        System.out.println(e.getUserName());
+    }
+
+
+    @Override
+    public void createStatusReport(CompletedFileUpload file) throws Exception {
+        log.info("Inside ServiceImpl in createStatusReport()");
+        this.excelOperation.createStatusReport(file.getInputStream());
+        log.info("Leaving ServiceImpl in createStatusReport()");
     }
 }

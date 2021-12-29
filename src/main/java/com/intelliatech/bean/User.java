@@ -1,9 +1,5 @@
 package com.intelliatech.bean;
 
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +14,8 @@ public class User {
     private String mobileNumber;
     @Column(name = "user_age")
     private int userAge;
-
+    @Column(name = "status")
+    private String status;
 
     public int getId() {
         return id;
@@ -52,6 +49,22 @@ public class User {
         this.userAge = userAge;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public User(int id, String userName, String mobileNumber, int userAge, String status) {
+        this.id = id;
+        this.userName = userName;
+        this.mobileNumber = mobileNumber;
+        this.userAge = userAge;
+        this.status = status;
+    }
+
     public User(int id, String userName, String mobileNumber, int userAge) {
         this.id = id;
         this.userName = userName;
@@ -61,6 +74,4 @@ public class User {
 
     public User() {
     }
-
-
 }

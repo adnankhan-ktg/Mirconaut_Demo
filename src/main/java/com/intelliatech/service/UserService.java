@@ -13,4 +13,6 @@ public interface UserService {
     void deleteUser(int userId);
     User updateUser(User user);
     List<User> dumpExcel(CompletedFileUpload file) throws Exception;
+    public void getExtractor();
+    public void createStatusReport(CompletedFileUpload file) throws Exception;
 }

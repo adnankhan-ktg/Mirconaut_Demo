@@ -83,7 +83,21 @@ public class UserController {
         return HttpResponse.status(HttpStatus.OK).body(list);
     }
 
+    @Post(value = "/getStatusReport",consumes = {MediaType.MULTIPART_FORM_DATA})
+    public HttpResponse<?> getStatusReport(@Part CompletedFileUpload file) throws IOException, SQLException,Exception
+    {
+        log.info("Inside UserController in getStatusReport()");
 
+         this.userService.createStatusReport(file);
+
+        log.info("Leaving UserController in getStatusReport()");
+        return HttpResponse.status(HttpStatus.OK);
+    }
+    @Get("/getExtractor")
+ public void getExtractor()
+ {
+     this.userService.getExtractor();
+ }
 
 
 

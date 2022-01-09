@@ -10,6 +10,8 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,10 +90,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void getExtractor() {
-        UserExtractor e = this.userRepository.getUserExtractor();
+    public void getExtractor(String value) {
+        List<UserExtractor> e = this.userRepository.getUserExtractor(value);
         System.out.println(e);
-        System.out.println(e.getUserName());
+
     }
 
 

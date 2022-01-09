@@ -93,10 +93,10 @@ public class UserController {
         log.info("Leaving UserController in getStatusReport()");
         return HttpResponse.status(HttpStatus.OK);
     }
-    @Get("/getExtractor")
- public void getExtractor()
+    @Get("/getExtractor/{value}")
+ public void getExtractor(@PathVariable("value") String value)
  {
-     this.userService.getExtractor();
+     this.userService.getExtractor(value);
  }
 
 

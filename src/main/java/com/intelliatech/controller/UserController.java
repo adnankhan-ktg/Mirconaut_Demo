@@ -1,6 +1,7 @@
 package com.intelliatech.controller;
 
 import com.intelliatech.bean.User;
+import com.intelliatech.service.PdfFileService;
 import com.intelliatech.service.UserService;
 import com.intelliatech.serviceimpl.UserServiceImpl;
 import io.micronaut.http.HttpResponse;
@@ -23,6 +24,9 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     @Inject
     private UserService userService;
+
+    @Inject
+    private PdfFileService pdfFileService;
 
 
 
@@ -95,10 +99,19 @@ public class UserController {
     }
     @Get("/getExtractor/{value}")
  public void getExtractor(@PathVariable("value") String value)
+
  {
      this.userService.getExtractor(value);
  }
 
+    @Post(value = "/uploadPdfFile", consumes = { MediaType.MULTIPART_FORM_DATA })
+    public String uploadPdfFile(@Part CompletedFileUpload file)
+    {
+        log.info("Inside UserController in uploadPdfFile()");
 
-
+        String url = this.pdfFileService.uploadFile(file);
+        log.info("Leaving UserController in uploadPdfFile()");
+        return url;
+    }
 }
+

@@ -12,10 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 @Singleton
@@ -317,9 +314,7 @@ public class ExcelOperation {
         //--------------------------------------
         List<User> list = new ArrayList<>();
         list.add(new User(1, "adnan khan", "8964882358", 20,"no"));
-        list.add(new User(2, "dheeraj patil", "8964882357", 25,"yes"));
-        list.add(new User(2, "shashank sharma", "8964882356", 27,"yes"));
-        list.add(new User(2, "vishal singh", "8964882351", 26,"yes"));
+
 
         //-------------------------------------
 
@@ -357,9 +352,29 @@ public class ExcelOperation {
                 row.createCell(2).setCellValue(u.getUserAge());
                 row.createCell(3).setCellValue(u.getStatus());
             }
-            FileOutputStream fileOut = new FileOutputStream("E:\\intelliatech\\abc.xlsx");
-            workbook.write(fileOut);
-            fileOut.close();
+//            FileOutputStream fileOut = new FileOutputStream("E:\\intelliatech\\abc.xlsx");
+//            workbook.write(fileOut);
+//            fileOut.close();
+
+//            --------------------------------------------
+
+            ByteArrayOutputStream b = new ByteArrayOutputStream();
+            try {
+                workbook.write(b);
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            byte[] bytes = b.toByteArray();
+//            Base64.encodeBase64String(bytes);
+              String s = Base64.getMimeEncoder().encodeToString(bytes);
+            System.out.println(s);
+
+
+
+
+//            --------------------------------------------
         }catch(Exception e){
             e.printStackTrace();
         }

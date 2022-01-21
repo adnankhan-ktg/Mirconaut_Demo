@@ -5,10 +5,7 @@ import io.micronaut.http.multipart.CompletedFileUpload;
 import jakarta.inject.Singleton;
 import org.apache.poi.hssf.usermodel.DVConstraint;
 import org.apache.poi.hssf.usermodel.HSSFDataValidation;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataValidation;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -218,7 +215,8 @@ public class ExcelOperation {
 //        System.out.println(tempName + " = "+lastName);
 //        getExcelFile();
 //        getDatabaseExcel();
-        getDatabaseExcelForStatus();
+//        getDatabaseExcelForStatus();
+        getDatabaseExcel();
     }
 
 
@@ -244,6 +242,7 @@ public class ExcelOperation {
 
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.createSheet("User Data");
+
             Row headerRow = sheet.createRow(0);
 
 
@@ -254,9 +253,15 @@ public class ExcelOperation {
             cellStyle.setFont(font);
             cellStyle.setBorderBottom(BorderStyle.THIN);
             cellStyle.setBorderRight(BorderStyle.THIN);
+            cellStyle.setLocked(true);
             //.........................
 
 
+            String cellValue = "1234567890";
+            XSSFCellStyle alterableStyle = (XSSFCellStyle)workbook.createCellStyle(); //  Get the style object of the current cell
+            alterableStyle.setLocked(true); //  Set this cell to be locked
+            XSSFCellStyle nolockedStyle = (XSSFCellStyle)workbook.createCellStyle(); //  Get the style object of the current cell
+            nolockedStyle.setLocked(false); //  Set this cell to be unlocked
 //----------------------------------------------------------------------
 
 
@@ -266,6 +271,8 @@ public class ExcelOperation {
                     .createExplicitListConstraint(datas);
             CellRangeAddressList addressList = null;
             XSSFDataValidation validation = null;
+            ///////////////////////////////////////////
+            //////////////////////////////////////////
 
             int firstColumn = 2;
             int lastColumn = 2;
@@ -288,6 +295,7 @@ public class ExcelOperation {
                 Cell cell = headerRow.createCell(j);
                 cell.setCellValue(columns[j]);
                 cell.setCellStyle(cellStyle);
+                cell.setCellStyle(nolockedStyle);
             }
 
             int rowNumber = 1;
@@ -298,6 +306,13 @@ public class ExcelOperation {
                 row.createCell(1).setCellValue(u.getUserAge());
                 row.createCell(2).setCellValue(u.getUserName());
             }
+
+//            ---------------------------------------------------------------
+
+
+
+
+//            ---------------------------------------------------------------
             FileOutputStream fileOut = new FileOutputStream("E:\\intelliatech\\abc.xlsx");
             workbook.write(fileOut);
             fileOut.close();
@@ -325,6 +340,7 @@ public class ExcelOperation {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.createSheet("sheet1");
             Row headerRow = sheet.createRow(0);
+            sheet.protectSheet("123");
 
             //.........................
             XSSFCellStyle cellStyle = workbook.createCellStyle();
@@ -333,12 +349,14 @@ public class ExcelOperation {
             cellStyle.setFont(font);
             cellStyle.setBorderBottom(BorderStyle.THIN);
             cellStyle.setBorderRight(BorderStyle.THIN);
+            cellStyle.setLocked(false);
             //.........................
 
 
             for (int j = 0; j < columns.length; ++j) {
                 Cell cell = headerRow.createCell(j);
                 cell.setCellValue(columns[j]);
+                cell.setCellStyle(cellStyle);
                 cell.setCellStyle(cellStyle);
             }
 
@@ -396,6 +414,8 @@ public class ExcelOperation {
             XSSFWorkbook workbook = new XSSFWorkbook(is);
 
             XSSFSheet sheet = workbook.getSheet("sheet1");
+
+            String name = workbook.getSheetAt(0).getSheetName();
 
             Row headerRow = sheet.getRow(0);
 

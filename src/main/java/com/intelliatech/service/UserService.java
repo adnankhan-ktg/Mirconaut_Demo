@@ -1,6 +1,7 @@
 package com.intelliatech.service;
 
 import com.intelliatech.bean.User;
+import io.micronaut.data.model.Page;
 import io.micronaut.http.multipart.CompletedFileUpload;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public interface UserService {
 
     User addUser(User user);
-    List<User> getUsers();
+    Page<User> getUsers(int offset, int page);
     User getUser(int userId);
     void deleteUser(int userId);
     User updateUser(User user);

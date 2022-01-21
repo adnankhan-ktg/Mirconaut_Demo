@@ -5,9 +5,13 @@ import com.intelliatech.helper.ExcelOperation;
 import com.intelliatech.queryExtractor.UserExtractor;
 import com.intelliatech.repository.UserRepository;
 import com.intelliatech.service.UserService;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.data.runtime.http.PageableRequestArgumentBinder;
 import io.micronaut.http.multipart.CompletedFileUpload;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import org.apache.poi.hssf.record.pivottable.PageItemRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers() {
+    public Page<User> getUsers(int offset,int page) {
         log.info("Inside UserServiceImpl in getUsers()");
-        List<User> listOfUser = this.userRepository.findAll();
+        Pageable pageable = Pageable.from(page,offset);
+//        Page<User> listOfUser = this.userRepository.findAll(pageable);
+        Page<User> listOfUser = this.userRepository.findAllUsersWithPagination(pageable);
         log.info("Leaving UserServiceImpl in getUsers()");
         return listOfUser;
 
@@ -91,8 +97,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void getExtractor(String value) {
-        List<UserExtractor> e = this.userRepository.getUserExtractor(value);
-        System.out.println(e);
+//        List<UserExtractor> e = this.userRepository.getUserExtractor(value);
+//        System.out.println(e);
+//        System.out.println(e);
 
     }
 

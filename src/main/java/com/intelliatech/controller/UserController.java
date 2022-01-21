@@ -4,6 +4,7 @@ import com.intelliatech.bean.User;
 import com.intelliatech.service.PdfFileService;
 import com.intelliatech.service.UserService;
 import com.intelliatech.serviceimpl.UserServiceImpl;
+import io.micronaut.data.model.Page;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -40,11 +41,11 @@ public class UserController {
 
     }
 
-    @Get("/get/all")
-    public HttpResponse<List<User>> getUsers()
+    @Get("/get/all/{offset}/{page}")
+    public HttpResponse<?> getUsers(int offset, int page)
     {
         log.info("Inside UserController in getUsers()");
-        List<User> listOfUser = this.userService.getUsers();
+        Page<User> listOfUser = this.userService.getUsers(offset, page);
         log.info("Leaving UserController in getUsers()");
         return HttpResponse.status(HttpStatus.OK).body(listOfUser);
     }

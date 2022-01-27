@@ -72,6 +72,11 @@ public class User {
         this.userAge = userAge;
     }
 
+    public User(String userName, String mobileNumber) {
+        this.userName = userName;
+        this.mobileNumber = mobileNumber;
+    }
+
     public User() {
     }
 }

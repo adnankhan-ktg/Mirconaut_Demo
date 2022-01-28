@@ -5,6 +5,7 @@ import com.intelliatech.bean.User;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.data.model.Sort;
+import io.micronaut.data.model.Sort.Order;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import java.time.YearMonth;
@@ -43,17 +44,13 @@ public class HomeController {
          list.add(new User("amit","8964882357"));
          list.add(new User("sami","8964882359"));
 
-         String sortOrder = "desc";
-         String sortBy = "id";
          if(list.size() / offset < pageNumber)
          {
              return Page.empty();
          }
 
-         Sort sort = "ASc";
-         List<Sort.Order> orders = new ArrayList<>();
-         orders.add(new Sort.Order(Sort.Order.asc("userName").isIgnoreCase());
-         Pageable pageable = Pageable.from(pageNumber,offset);
+         Sort.Order order = new Sort.Order("userName", Order.Direction.ASC, true);
+         Pageable pageable = Pageable.from(pageNumber,offset,Sort.of(order));
          int max = (offset*(pageNumber+1) > list.size()) ? list.size() : offset*(pageNumber+1);
          Page<User> page = Page.of(list.subList(pageNumber*offset,max),pageable,list.size());
          return page;

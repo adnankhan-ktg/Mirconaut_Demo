@@ -11,6 +11,8 @@ import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Singleton
 public class ExcelOperation {
@@ -205,19 +207,6 @@ public class ExcelOperation {
 
     }
 
-    public static void main(String[] args) {
-
-//        String tempName = "khan";
-//        excelOperation(tempName);
-//        System.out.println("failed = " + failed);
-//        System.out.println("pass   = " + pass);
-//        System.out.println("total  = "+ total );
-//        System.out.println(tempName + " = "+lastName);
-//        getExcelFile();
-//        getDatabaseExcel();
-//        getDatabaseExcelForStatus();
-        getDatabaseExcel();
-    }
 
 
     public static void getDatabaseExcel()
@@ -452,6 +441,94 @@ public class ExcelOperation {
         System.out.println("yes = "+yesCount);
         System.out.println("total = "+totalCount);
         return 0;
+    }
+
+    public static void zipFileDownload()
+    {
+        try {
+            FileOutputStream fos = new FileOutputStream("multifiles.zip");
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            String file1Name = "E:\\intelliatech\\abc1.xlsx";
+            String file2Name = "E:\\intelliatech\\abc2.xlsx";
+
+            //Creating the workbook
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            workbook.write(zos);
+
+            System.out.println("Writing '" + fileName + "' to zip file");
+
+            File file = new File(fileName);
+            FileInputStream fis = new FileInputStream(file);
+            ZipEntry zipEntry = new ZipEntry(fileName);
+            zos.putNextEntry(zipEntry);
+
+            byte[] bytes = new byte[1024];
+            int length;
+            while ((length = fis.read(bytes)) >= 0) {
+                zos.write(bytes, 0, length);
+            }
+
+            zos.closeEntry();
+            fis.close();
+
+            zos.close();
+            fos.close();
+
+            ByteArrayOutputStream b = new ByteArrayOutputStream();
+            try {
+                workbook.write(b);
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            byte[] bytes = b.toByteArray();
+//            Base64.encodeBase64String(bytes);
+            String s = Base64.getMimeEncoder().encodeToString(bytes);
+            System.out.println(s);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void addToZipFile(String fileName, ZipOutputStream zos) throws FileNotFoundException, IOException {
+
+        System.out.println("Writing '" + fileName + "' to zip file");
+
+        File file = new File(fileName);
+        FileInputStream fis = new FileInputStream(file);
+        ZipEntry zipEntry = new ZipEntry(fileName);
+        zos.putNextEntry(zipEntry);
+
+        byte[] bytes = new byte[1024];
+        int length;
+        while ((length = fis.read(bytes)) >= 0) {
+            zos.write(bytes, 0, length);
+        }
+
+        zos.closeEntry();
+        fis.close();
+    }
+
+    public static void main(String[] args) {
+
+//        String tempName = "khan";
+//        excelOperation(tempName);
+//        System.out.println("failed = " + failed);
+//        System.out.println("pass   = " + pass);
+//        System.out.println("total  = "+ total );
+//        System.out.println(tempName + " = "+lastName);
+//        getExcelFile();
+//        getDatabaseExcel();
+//        getDatabaseExcelForStatus();
+//        getDatabaseExcel();
+        zipFileDownload();
     }
 
 }

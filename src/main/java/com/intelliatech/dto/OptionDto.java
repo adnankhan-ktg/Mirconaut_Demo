@@ -1,6 +1,6 @@
 package com.intelliatech.dto;
 
-public class optionDto {
+public class OptionDto {
 
     private String option;
 
@@ -12,10 +12,10 @@ public class optionDto {
         this.option = option;
     }
 
-    public optionDto(String option) {
+    public OptionDto(String option) {
         this.option = option;
     }
 
-    public optionDto() {
+    public OptionDto() {
     }
 }

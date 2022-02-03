@@ -1,10 +1,8 @@
 package com.intelliatech.helper;
 
-import com.intelliatech.dto.optionDto;
-import com.intelliatech.dto.response;
-import com.intelliatech.queryExtractor.QuestionOptionExtractor;
-
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Note {
@@ -54,8 +52,30 @@ public class Note {
 //    }
 
     public static void main(String[] args) {
-        String search = "in progress";
-        System.out.println(search.replace(" ","").trim());
+//        String search = "in progress";
+//        System.out.println(search.replace(" ","").trim());
+
+//        List<String> list = Arrays.asList("Product Manager","Business Manager","Product Head");
+        List<String> list = Arrays.asList("Product Manager","Product Head");
+
+        String roles = "";
+        for(int i = 0; i <list.size(); ++i)
+        {
+            roles = roles+","+list.get(i);
+        }
+        if(list.size() != 0)
+        roles = roles.substring(1);
+        System.out.println(roles);
+        String products = "";
+        String jsonString = "{\"roles\":\""+roles+"\",\"products\":\""+products+"\"}";
+        System.out.println(jsonString);
+
+        SecureRandom random = new SecureRandom();
+        int num = random.nextInt(100000);
+        String formatted = String.format("%05d", num);
+        System.out.println("digit = "+formatted);
+//
+//
 
 
     }

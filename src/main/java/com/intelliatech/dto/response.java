@@ -6,7 +6,7 @@ public class response {
 
     private Integer questionId;
     private String question;
-    List<optionDto> list;
+    List<OptionDto> list;
 
     public Integer getQuestionId() {
         return questionId;
@@ -24,15 +24,15 @@ public class response {
         this.question = question;
     }
 
-    public List<optionDto> getList() {
+    public List<OptionDto> getList() {
         return list;
     }
 
-    public void setList(List<optionDto> list) {
+    public void setList(List<OptionDto> list) {
         this.list = list;
     }
 
-    public response(Integer questionId, String question, List<optionDto> list) {
+    public response(Integer questionId, String question, List<OptionDto> list) {
         this.questionId = questionId;
         this.question = question;
         this.list = list;

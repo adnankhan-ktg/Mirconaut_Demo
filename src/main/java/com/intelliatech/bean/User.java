@@ -1,5 +1,9 @@
 package com.intelliatech.bean;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +20,19 @@ public class User {
     private int userAge;
     @Column(name = "status")
     private String status;
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    @JsonProperty("hello")
+    private Integer serialNumber;
+
+    public Integer getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(Integer serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 
     public int getId() {
         return id;
@@ -75,6 +92,15 @@ public class User {
     public User(String userName, String mobileNumber) {
         this.userName = userName;
         this.mobileNumber = mobileNumber;
+    }
+
+    public User(int id, String userName, String mobileNumber, int userAge, String status, Integer serialNumber) {
+        this.id = id;
+        this.userName = userName;
+        this.mobileNumber = mobileNumber;
+        this.userAge = userAge;
+        this.status = status;
+        this.serialNumber = serialNumber;
     }
 
     public User() {

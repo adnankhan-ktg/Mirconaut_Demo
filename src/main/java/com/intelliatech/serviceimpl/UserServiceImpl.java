@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
     public User getUser(int userId) {
         log.info("Inside UserServiceImpl in getUser");
         User user = this.userRepository.findById(userId);
+        user.setSerialNumber(1);
         log.info("Leaving UserServiceImpl in getUser");
         return user;
 

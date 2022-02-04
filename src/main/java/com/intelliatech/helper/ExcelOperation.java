@@ -456,25 +456,25 @@ public class ExcelOperation {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.getSheetAt(0);
             workbook.write(zos);
+//
+//            System.out.println("Writing '" + fileName + "' to zip file");
+//
+//            File file = new File(fileName);
+//            FileInputStream fis = new FileInputStream(file);
+//            ZipEntry zipEntry = new ZipEntry(fileName);
+//            zos.putNextEntry(zipEntry);
+//
+//            byte[] bytes = new byte[1024];
+//            int length;
+//            while ((length = fis.read(bytes)) >= 0) {
+//                zos.write(bytes, 0, length);
+//            }
 
-            System.out.println("Writing '" + fileName + "' to zip file");
-
-            File file = new File(fileName);
-            FileInputStream fis = new FileInputStream(file);
-            ZipEntry zipEntry = new ZipEntry(fileName);
-            zos.putNextEntry(zipEntry);
-
-            byte[] bytes = new byte[1024];
-            int length;
-            while ((length = fis.read(bytes)) >= 0) {
-                zos.write(bytes, 0, length);
-            }
-
-            zos.closeEntry();
-            fis.close();
-
-            zos.close();
-            fos.close();
+//            zos.closeEntry();
+//            fis.close();
+//
+//            zos.close();
+//            fos.close();
 
             ByteArrayOutputStream b = new ByteArrayOutputStream();
             try {
@@ -528,7 +528,74 @@ public class ExcelOperation {
 //        getDatabaseExcel();
 //        getDatabaseExcelForStatus();
 //        getDatabaseExcel();
-        zipFileDownload();
+//        zipFileDownload();
+    }
+
+
+    public void zip() throws Exception
+    {
+//        XSSFWorkbook workbook = new XSSFWorkbook();
+//        XSSFSheet sheet = workbook.createSheet("sheet1");
+//
+//        FileOutputStream fos = new FileOutputStream("multifiles.zip");
+//        ZipOutputStream zos = new ZipOutputStream(fos);
+//           workbook.write(fos);
+//        ZipEntry zipEntry = new ZipEntry(fos);
+        try
+        {
+            //Source files
+            String fileName1 = "C:\\Users\\Anubhav\\Desktop\\file1.txt";
+            String fileName2 = "C:\\Users\\Anubhav\\Desktop\\file2.txt";
+            //Zipped file
+            String zipFilename = "C:\\Users\\Anubhav\\Desktop\\Allfiles.zip";
+            File zipFile = new File(zipFilename);
+            FileOutputStream fos  = new FileOutputStream(zipFile);
+            ZipOutputStream zos = new ZipOutputStream(fos);
+            zipFile(fileName1, zos);
+            zipFile(fileName2, zos);
+            zos.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to zip file
+    private static void zipFile(String fileName, ZipOutputStream zos) throws IOException
+    {
+        final int BUFFER = 1024;
+        BufferedInputStream bis = null;
+        try
+        {
+            File file = new File(fileName);
+            FileInputStream fis = new FileInputStream(file);
+            bis = new BufferedInputStream(fis, BUFFER);
+
+            // ZipEntry --- Here file name can be created using the source file
+            ZipEntry zipEntry = new ZipEntry(file.getName());
+            zos.putNextEntry(zipEntry);
+            byte data[] = new byte[BUFFER];
+            int count;
+            while((count = bis.read(data, 0, BUFFER)) != -1)
+            {
+                zos.write(data, 0, count);
+            }
+            // close entry every time
+            zos.closeEntry();
+        }
+        finally
+        {
+            try
+            {
+                bis.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }

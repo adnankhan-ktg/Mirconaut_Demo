@@ -5,6 +5,7 @@ import com.intelliatech.helper.ExcelOperation;
 import com.intelliatech.queryExtractor.UserExtractor;
 import com.intelliatech.repository.UserRepository;
 import com.intelliatech.service.UserService;
+import com.sun.xml.internal.ws.resources.WsservletMessages;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.data.runtime.http.PageableRequestArgumentBinder;
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private ExcelOperation excelOperation;
+
+    @Inject
+    private WsservletMessages messages;
 
     @Override
     public User addUser(User user) {

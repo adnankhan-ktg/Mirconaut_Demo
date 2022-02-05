@@ -14,6 +14,7 @@ import java.util.zip.ZipOutputStream;
 
 public class ZippingMultipleFiles
 {
+
 //    public static void main(String[] args)
 //    {
 //        try
@@ -167,6 +168,7 @@ public static void main(String[] args) throws Exception{
     XSSFWorkbook workbook2 = new XSSFWorkbook();
     XSSFSheet sheet2 = workbook2.createSheet("sheet2");
 
+    System.out.println(System.getProperty("resources"));
     FileOutputStream out1 = new FileOutputStream(
             new File("D:\\intelliatech\\Mirconaut_Demo\\src\\main\\resources\\excelFile\\workbook1.xlsx"));
        workbook1.write(out1);
@@ -221,7 +223,8 @@ public static void main(String[] args) throws Exception{
     }
 //    FileInputStream fileInputStream = new FileInputStream("D:\\excel\\m\\file.zip");
 
-    File file = new File("D:\\excel\\m\\file.zip");
+
+    File file = new File("..\\excel\\m\\file.zip");
 //    byte[] array = Files.readAllBytes(Paths.get("D:\\excel\\m\\file.zip"));
     byte[] array = Files.readAllBytes(Paths.get("D:\\intelliatech\\Mirconaut_Demo\\src\\main\\resources\\excelFile\\workbook1.xlsx"));
     String s = Base64.getMimeEncoder().encodeToString(array);

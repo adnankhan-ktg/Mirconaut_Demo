@@ -2,8 +2,6 @@ package com.intelliatech.controller;
 
 
 import com.intelliatech.bean.User;
-import com.intelliatech.dto.OptionDto;
-import io.micronaut.data.annotation.Query;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.annotation.*;
